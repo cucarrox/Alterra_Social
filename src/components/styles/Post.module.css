@@ -1,0 +1,45 @@
+.post + .post {
+  margin-top: 2rem;
+}
+
+.content p {
+  margin-top: 1rem;
+}
+.content a {
+  font-weight: bold;
+  color: rgb(143, 143, 143);
+  text-decoration: none;
+  margin-right: 0.5rem;
+}
+.content a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.form footer {
+  visibility: hidden;
+  max-height: 0;
+  transition: visibility 0.01s, max-height 0.2s;
+}
+
+.commentsSection {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.commentsSection.show {
+  max-height: 100%; /* Valor arbitrário grande o suficiente para conter os comentários */
+  opacity: 1;
+}
+
+.form:focus-within footer {
+  visibility: visible;
+  max-height: 100px; /* Você pode ajustar esse valor conforme necessário */
+}
+
+.preCommentBox span::after {
+  content: "\2022";
+  padding: 0 0.75rem;
+}

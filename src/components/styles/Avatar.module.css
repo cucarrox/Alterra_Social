@@ -1,0 +1,10 @@
+.avatar {
+  border-radius: 8px;
+  border: 4px solid #303030;
+}
+
+.avatarBorder {
+  outline: 1px solid #2584dc;
+  border-radius: 8px;
+  border: 4px solid #303030;
+}
