@@ -18,7 +18,7 @@ export function Perfil() {
         <DropdownMenuTrigger>
           <List size={45} className="text-white hover:text-[#2584DC] transition rounded-full p-1 hover:bg-[#383841]" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className={`${styles.menuContent} bg-[#202024] text-white border-[#202024] border-2 p-0 mr-4`}>
+        <DropdownMenuContent className={`${styles.menuContent} bg-[#202024] text-white border-[#202024] border-2 p-0 relative right-4`}>
           <aside>
             <img
               className="w-full h-[72px] object-cover"

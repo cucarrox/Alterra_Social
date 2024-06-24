@@ -7,11 +7,13 @@ import { format, formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { ChatDots } from "@phosphor-icons/react";
 
-import React, { useState } from "react";
+// TS
+import { useCommentFunctions } from "../ts/addNewCommet";
+import { showCommentFuction } from "../ts/showButtonComment";
 
 export function Post(props: any) {
-
-  // Datas
+  
+  // Mostrar datas
   const publishedDateFormated = format(
     props.publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
@@ -22,31 +24,10 @@ export function Post(props: any) {
     addSuffix: true,
   });
 
-  // === ADICIONAR COMENTARIOS ===
-  // useState ou estados = são variáveis onde o react irá monitorar os componentes caso haja mudanças
-  const [commentPost, setCommentPost] = useState<string[]>([]);
-  const [newCommentText, setNewCommentText] = useState("")
-
-  // Coisa nova
-  function createNewComment(event: any) {
-    event?.preventDefault();
-
-    setCommentPost([...commentPost, newCommentText]);
-    setNewCommentText("")
-
-    event.target.commentText.value = "";
-  }
-
-  function newCommentTextChange(event: any) { // Usa-se a programção declarativa
-    setNewCommentText(event?.target.value)
-  }
-
-  //Botão para mostrar os comentários
-  const [showComments, setShowComments] = useState(false);
-
-  const toggleComments = () => {
-    setShowComments(!showComments);
-  };
+  // Exportação para criar novo comentário
+  const { commentPost, newCommentText, createNewComment, newCommentTextChange,} = useCommentFunctions();
+  // Exportação para mostar comentários
+  const { showComments, toggleComments } = showCommentFuction()
 
   return (
     <>
@@ -103,7 +84,7 @@ export function Post(props: any) {
             className="w-full bg-[#131313] resize-none h-24 p-4 text-gray-200 leading-[1.4] mt-4 rounded-[8px]"
             placeholder="Escrever seu comentário..."
           />
-          
+
           <footer className="invisible max-h-0">
             <button
               className="px-8 py-3 mt-4 rounded-[8px] border-0 bg-[#2d6ba5] hover:bg-[#2584DC] transition select-none cursor-pointer font-bold "
@@ -125,7 +106,11 @@ export function Post(props: any) {
               <ChatDots size={20} />
             </button>
           </div>
-          <div className={`${styles.commentsSection} ${showComments ? styles.show : ""}`}>
+          <div
+            className={`${styles.commentsSection} ${
+              showComments ? styles.show : ""
+            }`}
+          >
             {commentPost.map((comment) => (
               <Comment content={comment} />
             ))}

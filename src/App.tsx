@@ -7,7 +7,7 @@ import styles from "./components/styles/App.module.css";
 // Componetes
 import { Header } from "./components/header";
 import { Post } from "./components/post";
-import { posts } from "./ts/post";
+import { posts } from "./ts/postExampleComments";
 
 export function App() {
   return (
