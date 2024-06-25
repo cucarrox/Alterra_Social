@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 // Definimos uma interface para o estado inicial e as funções que vamos exportar
-interface CommentFunctions {
+export interface CommentFunctions {
   commentPost: string[];
+  setCommentPost: any;
   newCommentText: string;
   createNewComment: any;
   newCommentTextChange: any;
@@ -28,6 +29,7 @@ export function useCommentFunctions(): CommentFunctions {
 
   return {
     commentPost,
+    setCommentPost,
     newCommentText,
     createNewComment,
     newCommentTextChange,

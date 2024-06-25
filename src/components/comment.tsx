@@ -3,9 +3,13 @@ import margaritMaida from "../assets/img/MargueritPortrait.png"
 
 import styles from "./styles/Comment.module.css"
 import { Avatar } from "./ui/avatar";
-import { Cone } from "lucide-react";
 
 export function Comment(props: any) {
+   function handleDeleteComment() {
+      
+      props.onDeleteComment(props.content)
+   }
+
    return (
       <>
          <div className="mt-6 flex gap-[1rem]">
@@ -17,7 +21,7 @@ export function Comment(props: any) {
                         <strong className="text-[0.875rem] leading-relaxed">Marguerit Maida</strong>
                         <time className="text-[0.75rem] leading-relaxed text-gray-500"  title="19 de Junho às 8:59" dateTime="2024-06-19 08:59:12">Cerca de 1 hora atrás</time>
                      </div>
-                     <button className="bg-transparent border-0 text-gray-500 rounded-full leading-[0] hover:text-[#F75A68] transition" title="Deletar comentário">
+                     <button onClick={handleDeleteComment} className="bg-transparent border-0 text-gray-500 rounded-full leading-[0] hover:text-[#F75A68] transition" title="Deletar comentário">
                         <Trash size={24} />
                      </button>
                   </header>

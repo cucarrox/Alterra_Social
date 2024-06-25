@@ -3,31 +3,32 @@ import styles from "./styles/Post.module.css";
 // Componentes
 import { Comment } from "./comment";
 import { Avatar } from "./ui/avatar";
-import { format, formatDistanceToNow } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { ChatDots } from "@phosphor-icons/react";
 
 // TS
 import { useCommentFunctions } from "../ts/addNewCommet";
-import { showCommentFuction } from "../ts/showButtonComment";
+import { showCommentFuction } from "../ts/handleShowButtonComment";
+import { postSideDate } from "@/ts/postDate";
 
 export function Post(props: any) {
-  
   // Mostrar datas
-  const publishedDateFormated = format(
-    props.publishedAt,
-    "d 'de' LLLL 'às' HH:mm'h'",
-    { locale: ptBR }
-  );
-  const publishedDateRelativeToNow = formatDistanceToNow(props.publishedAt, {
-    locale: ptBR,
-    addSuffix: true,
-  });
-
+  const { publishedDateFormated, publishedDateRelativeToNow } =
+    postSideDate(props);
   // Exportação para criar novo comentário
-  const { commentPost, newCommentText, createNewComment, newCommentTextChange,} = useCommentFunctions();
+  const {
+    commentPost,
+    setCommentPost,
+    newCommentText,
+    createNewComment,
+    newCommentTextChange,
+  } = useCommentFunctions();
   // Exportação para mostar comentários
-  const { showComments, toggleComments } = showCommentFuction()
+  const { showComments, toggleComments } = showCommentFuction();
+  // Deletar Post
+  function deleteComment(commentToDelete: any) {
+    const commentWithoutDeletedOne = commentPost.filter(comment => comment !== commentToDelete);
+    setCommentPost(commentWithoutDeletedOne);
+  }
 
   return (
     <>
@@ -56,10 +57,10 @@ export function Post(props: any) {
         <div className={`${styles.content} leading-relaxed text-white mt-6`}>
           {props.content.map((line: any) => {
             if (line.type == "paragraph") {
-              return <p>{line.content}</p>;
+              return <p key={line.content}>{line.content}</p>;
             } else if (line.type == "link") {
               return (
-                <p>
+                <p key={line.content}>
                   <a target="_blank" href={line.content}>
                     {line.content}
                   </a>
@@ -83,6 +84,7 @@ export function Post(props: any) {
             onChange={newCommentTextChange}
             className="w-full bg-[#131313] resize-none h-24 p-4 text-gray-200 leading-[1.4] mt-4 rounded-[8px]"
             placeholder="Escrever seu comentário..."
+            required
           />
 
           <footer className="invisible max-h-0">
@@ -112,7 +114,7 @@ export function Post(props: any) {
             }`}
           >
             {commentPost.map((comment) => (
-              <Comment content={comment} />
+              <Comment key={comment} content={comment} onDeleteComment={deleteComment} />
             ))}
           </div>
         </div>
